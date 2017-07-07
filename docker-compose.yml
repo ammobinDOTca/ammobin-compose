@@ -23,7 +23,7 @@ services:
   images:
     image: willnorris/imageproxy:latest
     restart: always
-    entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  # -referrers localhost:3000,ammobin.ca
+    entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
     ports:
-      -  8081:8080
+      -  127.0.0.1:8081:8080
 
