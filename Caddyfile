@@ -1,0 +1,35 @@
+ammobin.ca {
+  tls {%EMAIL%}
+  gzip
+  push
+  proxy / client:3000 {
+    transparent
+  }
+  header / Strict-Transport-Security "max-age=31536000;"
+
+  log / /var/log/caddy/client.log "{combined}"
+
+}
+
+api.ammobin.ca {
+  tls {%EMAIL%}
+  gzip
+  push
+  proxy / api:8080 {
+    transparent
+  }
+  header / Strict-Transport-Security "max-age=31536000;"
+
+  
+  log / /var/log/caddy/api.log "{combined}"
+}
+
+images.ammobin.ca {
+  tls {%EMAIL%}
+  proxy / images:8080 {
+    transparent
+  }
+  header / Strict-Transport-Security "max-age=31536000;"
+
+
+}

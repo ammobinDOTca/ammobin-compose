@@ -1,17 +1,32 @@
 version: '2'
 services:
+  caddy:
+    image: abiosoft/caddy:latest
+    restart: always
+    env_file: .env 
+    links:
+      - client
+      - api
+      - images
+    volumes:
+      - ./.caddy:/root/.caddy
+      - ./Caddyfile:/etc/Caddyfile
+      - ./caddy-logs:/var/log/caddy
+    ports:
+      - 80:80
+      - 443:443
+    command: --conf  "/etc/Caddyfile"
   client:
     image: ammobindotca/ammobin-client:latest
     restart: always
     ports:
-      - 127.0.0.1:4000:3000
+      - 3000
   api:
     env_file: .env 
-    #build: .
     image: ammobindotca/ammobin-api:latest
     restart: always
     ports:
-      - 127.0.0.1:8080:8080
+      - 8080
     links:
       - redis
   redis:
@@ -25,5 +40,5 @@ services:
     restart: always
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
     ports:
-      -  127.0.0.1:8081:8080
+      - 8080
 

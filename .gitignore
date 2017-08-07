@@ -1,2 +1,4 @@
 .env
 redis-data
+.caddy
+caddy-logs
