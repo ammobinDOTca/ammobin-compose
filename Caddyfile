@@ -6,9 +6,7 @@ ammobin.ca {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
-
   log / /var/log/caddy/client.log "{combined}"
-
 }
 
 api.ammobin.ca {
@@ -19,8 +17,6 @@ api.ammobin.ca {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
-
-  
   log / /var/log/caddy/api.log "{combined}"
 }
 
@@ -30,6 +26,12 @@ images.ammobin.ca {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
+}
 
-
+stats.ammobin.ca {
+  tls {%EMAIL%}
+  root  /www/goaccess
+  gzip
+  push
+  basicauth / {%STATSUSER%} {%STATSPASS%}
 }

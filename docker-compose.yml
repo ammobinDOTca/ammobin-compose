@@ -12,6 +12,7 @@ services:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
       - ./caddy-logs:/var/log/caddy
+      - ./goaccess-data/report/:/www/goaccess
     ports:
       - 80:80
       - 443:443
@@ -41,4 +42,9 @@ services:
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
     ports:
       - 8080
-
+  goaccess:
+    image: allinurl/goaccess
+    volumes:
+      - ./goaccess-data/data:/srv/data
+      - ./goaccess-data/report:/srv/report
+      - ./caddy-logs:/srv/logs    
