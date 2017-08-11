@@ -6,7 +6,10 @@ ammobin.ca {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
-  log / /var/log/caddy/client.log "{combined}"
+  log / /var/log/caddy/client.log "{combined}" {
+    rotate_size 50
+  }
+
 }
 
 api.ammobin.ca {
