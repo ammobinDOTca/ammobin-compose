@@ -3,3 +3,4 @@ redis-data
 .caddy
 caddy-logs
 goaccess-data/report
+influx-data

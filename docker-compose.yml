@@ -23,7 +23,7 @@ services:
     ports:
       - 3000
   influx:
-    image: influx:1.3-alpine
+    image: influxdb:1.3-alpine
     restart: always
     volumes:
       - ./influx-data/:/var/lib/influxdb      
