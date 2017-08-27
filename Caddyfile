@@ -38,3 +38,12 @@ stats.ammobin.ca {
   push
   basicauth / {%STATSUSER%} {%STATSPASS%}
 }
+
+
+graphana.ammobin.ca {
+  tls {%EMAIL%}
+  proxy / graphana:3000 {
+    transparent
+  }
+  header / Strict-Transport-Security "max-age=31536000;"
+}

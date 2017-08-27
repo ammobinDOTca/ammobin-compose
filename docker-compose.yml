@@ -8,6 +8,7 @@ services:
       - client
       - api
       - images
+      - graphana
     volumes:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
@@ -55,4 +56,12 @@ services:
     volumes:
       - ./goaccess-data/data:/srv/data
       - ./goaccess-data/report:/srv/report
-      - ./caddy-logs:/srv/logs    
+      - ./caddy-logs:/srv/logs  
+  graphana:
+    image: grafana/grafana
+    env_file: .env
+    restart: always
+    ports:
+      - 3000
+    volumes:
+      - ./graphana:/var/lib/grafana
