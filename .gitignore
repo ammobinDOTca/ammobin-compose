@@ -4,3 +4,4 @@ redis-data
 caddy-logs
 goaccess-data/report
 influx-data
+graphana

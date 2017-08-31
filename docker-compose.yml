@@ -42,9 +42,10 @@ services:
   redis:
     image: redis:3.0-alpine
     restart: always
-    command: redis-server --appendonly yes
+    command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - ./redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
   images:
     image: willnorris/imageproxy:latest
     restart: always
