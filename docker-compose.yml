@@ -1,9 +1,9 @@
-version: '2'
+version: '2.2'
 services:
   caddy:
     image: abiosoft/caddy:latest
     restart: always
-    env_file: .env 
+    env_file: .env
     links:
       - client
       - api
@@ -21,15 +21,19 @@ services:
   client:
     image: ammobindotca/ammobin-client:latest
     restart: always
+    init: true
+    mem_limit: 250MB
   influx:
     image: influxdb:1.3-alpine
     restart: always
     volumes:
-      - ./influx-data/:/var/lib/influxdb      
+      - ./influx-data/:/var/lib/influxdb
   api:
-    env_file: .env 
+    env_file: .env
     image: ammobindotca/ammobin-api:latest
     restart: always
+    init: true
+    mem_limit: 250MB
     links:
       - redis
       - influx
@@ -37,6 +41,7 @@ services:
     image: redis:3.0-alpine
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
+    mem_limit: 200MB
     volumes:
       - ./redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
@@ -49,7 +54,7 @@ services:
     volumes:
       - ./goaccess-data/data:/srv/data
       - ./goaccess-data/report:/srv/report
-      - ./caddy-logs:/srv/logs  
+      - ./caddy-logs:/srv/logs
   graphana:
     image: grafana/grafana
     env_file: .env
