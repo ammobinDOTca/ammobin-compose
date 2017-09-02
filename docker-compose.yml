@@ -23,6 +23,8 @@ services:
     restart: always
     init: true
     mem_limit: 250MB
+    depends_on:
+      - api
   influx:
     image: influxdb:1.3-alpine
     restart: always
@@ -35,6 +37,9 @@ services:
     init: true
     mem_limit: 250MB
     links:
+      - redis
+      - influx
+    depends_on:
       - redis
       - influx
   redis:
