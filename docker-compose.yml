@@ -23,6 +23,7 @@ services:
     restart: always
     init: true
     mem_limit: 250MB
+    memswap_limit: 1G
     depends_on:
       - api
   influx:
@@ -35,7 +36,9 @@ services:
     image: ammobindotca/ammobin-api:latest
     restart: always
     init: true
-    mem_limit: 250MB
+    mem_reservation: 150MB
+    mem_limit: 400MB
+    memswap_limit: 1GB
     links:
       - redis
       - influx
