@@ -37,7 +37,7 @@ services:
     restart: always
     init: true
     mem_reservation: 150MB
-    mem_limit: 400MB
+    mem_limit: 500MB
     memswap_limit: 1GB
     links:
       - redis
