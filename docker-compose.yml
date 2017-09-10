@@ -45,6 +45,18 @@ services:
     depends_on:
       - redis
       - influx
+  worker:
+    env_file: .env
+    image: ammobindotca/ammobin-worker
+    restart: always
+    init: true
+    links:
+      - redis
+      - influx
+    depends_on:
+      - redis
+      - influx
+      - api
   redis:
     image: redis:3.0-alpine
     restart: always
