@@ -10,6 +10,9 @@ ammobin.ca {
     rotate_size 50
   }
 
+  errors {
+    * /srv/custom-error.html
+  }
 }
 
 api.ammobin.ca {
