@@ -23,7 +23,7 @@ services:
     image: ammobindotca/ammobin-client:latest
     restart: always
     init: true
-    mem_limit: 250MB
+    mem_limit: 500MB
     memswap_limit: 1G
     depends_on:
       - api
