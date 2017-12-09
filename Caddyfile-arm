@@ -1,0 +1,16 @@
+:80 {
+  
+  proxy / client:3000 {
+    transparent
+  }
+  
+}
+
+:8080 {
+
+  proxy / api:8080 {
+    transparent
+  }
+ 
+}
+
