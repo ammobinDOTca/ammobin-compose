@@ -2,8 +2,9 @@ ammobin.ca {
   tls {%EMAIL%}
   gzip
   push
-  proxy / client:3000 {
+  proxy / client:3000 https://ammobin.now.sh {
     transparent
+    policy first
   }
   
   header / {
