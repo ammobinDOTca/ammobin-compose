@@ -3,8 +3,13 @@ ammobin.ca {
   gzip
   push
   proxy / client:3000 https://ammobin.now.sh {
-    transparent
+# proxy / https://ammobin-client.herokuapp.com/ {
+#    transparent
     policy first
+    fail_timeout 1s
+    max_fails 5
+    try_duration 1s
+    health_check /
   }
   
   header / {
