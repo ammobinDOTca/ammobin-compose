@@ -53,6 +53,8 @@ api.ammobin.ca {
 }
 
 images.ammobin.ca {
+  
+  log stdout
   tls {%EMAIL%}
   proxy / images:8080 {
     transparent

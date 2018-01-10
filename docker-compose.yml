@@ -4,6 +4,8 @@ services:
     image: abiosoft/caddy:latest
     restart: always
     env_file: .env
+    networks:
+      - front
     links:
       - client
       - api
@@ -27,6 +29,8 @@ services:
   client:
     image: ammobindotca/ammobin-client:latest
     restart: always
+    networks:
+      - front
     deploy:
       resources:
         limits:
@@ -36,6 +40,8 @@ services:
   influx:
     image: influxdb:1.3-alpine
     restart: always
+    networks:
+      - front
     volumes:
       - ./influx-data/:/var/lib/influxdb
     deploy:
@@ -47,6 +53,8 @@ services:
     env_file: .env
     image: ammobindotca/ammobin-api:latest
     restart: always
+    networks:
+      - front
     deploy:
       resources:
         limits:
@@ -61,6 +69,8 @@ services:
     env_file: .env
     image: ammobindotca/ammobin-worker
     restart: always
+    networks:
+      - front
     links:
       - redis
       - influx
@@ -68,14 +78,16 @@ services:
       - redis
       - influx
       - api
-    deploy:
-      placement:
-        constraints:
-          - node.role == worker
+#    deploy:
+ #     placement:
+  #      constraints:
+   #       - node.role == worker
   redis:
     image: redis:3.0-alpine
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - front
     deploy:
       resources:
         limits:
@@ -90,31 +102,36 @@ services:
   images:
     image: willnorris/imageproxy:latest
     restart: always
+    networks:
+      - front
     deploy:
       resources:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
-  goaccess:
-    image: allinurl/goaccess
-    deploy:
-      resources:
-        limits:
-          memory: 75M
-    volumes:
-      - ./goaccess-data/data:/srv/data
-      - ./goaccess-data/report:/srv/report
-      - ./caddy-logs:/srv/logs
-  graphana:
-    image: grafana/grafana
-    env_file: .env
-    restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 150M
-      placement:
-        constraints:
-          - node.role == worker
-    volumes:
-      - ./graphana:/var/lib/grafana
+#  goaccess:
+#    image: allinurl/goaccess
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 75M
+#    volumes:
+#      - ./goaccess-data/data:/srv/data
+#      - ./goaccess-data/report:/srv/report
+#      - ./caddy-logs:/srv/logs
+#  graphana:
+#    image: grafana/grafana
+#    env_file: .env
+#    restart: always
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 150M
+#      placement:
+#        constraints:
+      #    - node.role == worker
+  #  volumes:
+  #    - ./graphana:/var/lib/grafana
+
+networks:
+  front:
