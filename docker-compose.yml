@@ -60,6 +60,7 @@ services:
       resources:
         limits:
           memory: 500M
+      replicas: 1 # todo: change to 2 once have a way to only put one set of scrape tasks onto the queue
     links:
       - redis
       - influx
@@ -84,9 +85,9 @@ services:
         limits:
           memory: 450M
       replicas: 1
-      placement:
-        constraints:
-          - node.role == worker
+  #    placement:
+ #       constraints:
+#          - node.role == worker
   redis:
     image: redis:3.0-alpine
     restart: always
@@ -121,23 +122,29 @@ services:
 #      resources:
 #        limits:
 #          memory: 75M
+    #  placement:
+     #   constraints:
+      #    - node.role == manager
 #    volumes:
 #      - ./goaccess-data/data:/srv/data
 #      - ./goaccess-data/report:/srv/report
 #      - ./caddy-logs:/srv/logs
-#  graphana:
-#    image: grafana/grafana
-#    env_file: .env
-#    restart: always
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 150M
-#      placement:
-#        constraints:
-      #    - node.role == worker
-  #  volumes:
-  #    - ./graphana:/var/lib/grafana
+  graphana:
+    image: grafana/grafana
+    env_file: .env
+    restart: always
+    networks:
+      - front
+    deploy:
+      resources:
+        limits:
+          memory: 150M
+      placement:
+        constraints:
+          - node.role == manager
+    volumes:
+      - ./graphana:/var/lib/grafana
 
 networks:
   front:
+# todo: create back network for redis + influxdb
