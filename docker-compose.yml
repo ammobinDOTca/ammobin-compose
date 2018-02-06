@@ -77,16 +77,6 @@ services:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
-  goaccess:
-    image: allinurl/goaccess
-    deploy:
-      resources:
-        limits:
-          memory: 75M
-    volumes:
-      - ./goaccess-data/data:/srv/data
-      - ./goaccess-data/report:/srv/report
-      - ./caddy-logs:/srv/logs
   graphana:
     image: grafana/grafana
     env_file: .env

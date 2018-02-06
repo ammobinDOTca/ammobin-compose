@@ -2,7 +2,7 @@ ammobin.ca {
   tls {%EMAIL%}
   gzip
   push
-  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com/{
+  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com {
     policy first
     fail_timeout 1s
     max_fails 5
@@ -22,7 +22,7 @@ ammobin.ca {
   }
   
   log / /var/log/caddy/client.log "{combined}" {
-    rotate_size 15
+    rotate_size 25
   }
 
   errors {
@@ -48,7 +48,7 @@ api.ammobin.ca {
     X-Frame-Options "DENY"
   }
   log / /var/log/caddy/api.log "{combined}" {
-    rotate_size 15
+    rotate_size 25
   }
 }
 
