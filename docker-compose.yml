@@ -28,6 +28,8 @@ services:
           memory: 450M
     depends_on:
       - api
+    # ports:
+    #   - 127.0.0.1:3000:3000
   influx:
     image: influxdb:1.3-alpine
     restart: always
@@ -47,6 +49,8 @@ services:
     depends_on:
       - redis
       - influx
+    # ports:
+    #   - 127.0.0.1:8080:8080
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker
@@ -77,6 +81,8 @@ services:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
+    # ports:
+    #   - 127.0.0.1:8081:8081
   graphana:
     image: grafana/grafana
     env_file: .env
@@ -87,3 +93,5 @@ services:
           memory: 150M
     volumes:
       - ./graphana:/var/lib/grafana
+    ports:
+      - 127.0.0.1:8082:3000

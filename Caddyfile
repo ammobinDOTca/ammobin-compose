@@ -9,7 +9,7 @@ ammobin.ca {
     try_duration 1s
     health_check /
   }
-  
+
   header / {
     # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
     Strict-Transport-Security "max-age=31536000;"
@@ -20,7 +20,7 @@ ammobin.ca {
     # Disallow the site to be rendered within a frame (clickjacking protection)
     X-Frame-Options "DENY"
   }
-  
+
   log / /var/log/caddy/client.log "{combined}" {
     rotate_size 25
   }
@@ -80,7 +80,8 @@ stats.ammobin.ca {
 
 graphana.ammobin.ca {
   tls {%EMAIL%}
-  proxy / graphana:3000 {
+#  proxy / graphana:3000 {
+  proxy / 127.0.0.1:8082 {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
