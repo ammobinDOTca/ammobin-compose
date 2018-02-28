@@ -81,7 +81,7 @@ stats.ammobin.ca {
 graphana.ammobin.ca {
   tls {%EMAIL%}
 #  proxy / graphana:3000 {
-  proxy / localhost:8082 {
+  proxy / 10.20.0.5:8082 172.18.0.1:8082 172.17.0.1:8082 172.20.0.1:8082 172.19.0.1:8082 {
     transparent
   }
   header / Strict-Transport-Security "max-age=31536000;"
