@@ -4,6 +4,7 @@ services:
     image: abiosoft/caddy:latest
     restart: always
     env_file: .env
+    network_mode: host
     links:
       - client
       - api
@@ -87,6 +88,7 @@ services:
     image: grafana/grafana
     env_file: .env
     restart: always
+    network_mode: host
     deploy:
       resources:
         limits:
