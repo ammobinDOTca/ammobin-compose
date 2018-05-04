@@ -1,7 +1,7 @@
 version: '3'
 services:
   caddy:
-    image: abiosoft/caddy:latest
+    image: abiosoft/caddy
     restart: always
     env_file: .env
     links:
@@ -18,7 +18,7 @@ services:
     ports:
       - 80:80
       - 443:443
-    command: --conf  "/etc/Caddyfile"
+    command: --agree --conf  "/etc/Caddyfile"
   client:
     image: ammobindotca/ammobin-client:latest
     restart: always
@@ -78,7 +78,7 @@ services:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
   graphana:
-    image: grafana/grafana
+    image: grafana/grafana:5.0.4
     env_file: .env
     restart: always
     deploy:
