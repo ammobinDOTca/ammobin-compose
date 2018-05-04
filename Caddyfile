@@ -21,8 +21,8 @@ ammobin.ca {
     X-Frame-Options "DENY"
   }
   
-  log / /var/log/caddy/client.log "{combined}" {
-    rotate_size 25
+  log / /var/log/caddy/ammobin.log "{combined}" {
+    rotate_size 100
   }
 
   errors {
@@ -47,8 +47,8 @@ api.ammobin.ca {
     # Disallow the site to be rendered within a frame (clickjacking protection)
     X-Frame-Options "DENY"
   }
-  log / /var/log/caddy/api.log "{combined}" {
-    rotate_size 25
+  log / /var/log/caddy/ammobin.log "{combined}" {
+    rotate_size 100
   }
 }
 
