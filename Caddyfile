@@ -19,6 +19,8 @@ ammobin.ca {
     X-Content-Type-Options "nosniff"
     # Disallow the site to be rendered within a frame (clickjacking protection)
     X-Frame-Options "DENY"
+
+    Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline'; connect-src  'self' api.ammobin.ca;  style-src 'self' 'unsafe-inline';img-src 'self' images.ammobin.ca;  report-uri https://ammobin.report-uri.com/r/d/csp/enforce"
   }
   
   log / /var/log/caddy/ammobin.log "{combined}" {
