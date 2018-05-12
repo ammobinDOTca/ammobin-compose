@@ -32,9 +32,9 @@ services:
     image: influxdb:1.5-alpine
     restart: always
     environment:
-      - INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE=100M
-      - INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE=100M
-      - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION = 1H
+     # - INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE=100M
+     # - INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE=100M
+      - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION=1h
       - INFLUXDB_DATA_INDEX_VERSION=tsi1
     volumes:
       - ./influx-data/:/var/lib/influxdb
