@@ -75,8 +75,16 @@ stats.ammobin.ca {
   gzip
   push
   basicauth / {%STATSUSER%} {%STATSPASS%}
+  log
 }
 
+
+stats.ammobin.ca:7890 {
+
+ proxy / goaccess:7890 {
+   websocket
+ }
+}
 
 graphana.ammobin.ca {
   tls {%EMAIL%}

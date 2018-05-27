@@ -13,7 +13,7 @@ services:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
       - ./caddy-logs:/var/log/caddy
-      - ./goaccess-data/report/:/www/goaccess
+      - ./goaccess/html:/www/goaccess
       - ./caddy-srv/:/srv
     ports:
       - 80:80
@@ -87,3 +87,10 @@ services:
           memory: 150M
     volumes:
       - ./graphana:/var/lib/grafana
+  goaccess:
+    image: allinurl/goaccess
+    volumes:
+      - ./goaccess/data:/srv/data
+      - ./goaccess/html:/srv/report
+      - ./caddy-logs:/srv/logs
+    entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=ws://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log #--real-time-html
