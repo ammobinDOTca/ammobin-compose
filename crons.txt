@@ -1,0 +1,3 @@
+0 0 * * * docker system prune --all -f
+2 0 * * * docker network prune -f
+*/5 * * * * cd <path> && docker-compose pull && docker-compose up -d
