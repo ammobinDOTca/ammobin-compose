@@ -2,6 +2,7 @@
 redis-data
 .caddy
 caddy-logs
-goaccess-data/report
+caddy-srv/
+goaccess/html/
 influx-data
 graphana
