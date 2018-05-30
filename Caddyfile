@@ -82,7 +82,8 @@ stats.ammobin.ca {
 
 
 stats.ammobin.ca:7890 {
-
+ log
+ tls {%EMAIL%}
  proxy / goaccess:7890 {
    websocket
  }
