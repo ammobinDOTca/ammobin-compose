@@ -18,6 +18,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 7890:7890
     command: --agree --conf  "/etc/Caddyfile"
   client:
     image: ammobindotca/ammobin-client:latest
@@ -98,4 +99,4 @@ services:
       - ./goaccess/data:/srv/data
       - ./goaccess/html:/srv/report
       - ./caddy-logs:/srv/logs
-    entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=ws://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log #--real-time-html
+    entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=wss://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log --real-time-html
