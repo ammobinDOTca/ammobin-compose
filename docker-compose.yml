@@ -29,16 +29,16 @@ services:
           memory: 450M
     depends_on:
       - api
-  influx:
-    image: influxdb:1.5-alpine
-    restart: always
-    environment:
+ # influx:
+ #   image: influxdb:1.5-alpine
+#    restart: always
+#    environment:
      # - INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE=100M
      # - INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE=100M
-      - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION=1h
-      - INFLUXDB_DATA_INDEX_VERSION=tsi1
-    volumes:
-      - ./influx-data/:/var/lib/influxdb
+ #     - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION=1h
+ #     - INFLUXDB_DATA_INDEX_VERSION=tsi1
+ #   volumes:
+ #     - ./influx-data/:/var/lib/influxdb
   api:
     env_file: .env
     image: ammobindotca/ammobin-api:latest
@@ -53,6 +53,8 @@ services:
     depends_on:
       - redis
       - influx
+    environmnet:
+      - DONT_USE_INFLUX=true
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker
@@ -64,6 +66,8 @@ services:
       - redis
       - influx
       - api
+    environmnet:
+      - DONT_USE_INFLUX=true
   redis:
     image: redis:3.0-alpine
     restart: always
@@ -83,16 +87,16 @@ services:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
-  graphana:
-    image: grafana/grafana:5.0.4
-    env_file: .env
-    restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 150M
-    volumes:
-      - ./graphana:/var/lib/grafana
+#  graphana:
+#    image: grafana/grafana:5.0.4
+#    env_file: .env
+#    restart: always
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 150M
+#    volumes:
+#      - ./graphana:/var/lib/grafana
   goaccess:
     image: allinurl/goaccess
     volumes:
