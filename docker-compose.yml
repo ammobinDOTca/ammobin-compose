@@ -8,7 +8,7 @@ services:
       - client
       - api
       - images
-      - graphana
+        #   - graphana
     volumes:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
@@ -49,11 +49,11 @@ services:
           memory: 500M
     links:
       - redis
-      - influx
+      - fluent
     depends_on:
       - redis
-      - influx
-    environmnet:
+      - fluent
+    environment:
       - DONT_USE_INFLUX=true
   worker:
     env_file: .env
@@ -61,12 +61,12 @@ services:
     restart: always
     links:
       - redis
-      - influx
+      - fluent
     depends_on:
       - redis
-      - influx
+      - fluent
       - api
-    environmnet:
+    environment:
       - DONT_USE_INFLUX=true
   redis:
     image: redis:3.0-alpine
@@ -87,16 +87,6 @@ services:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
-#  graphana:
-#    image: grafana/grafana:5.0.4
-#    env_file: .env
-#    restart: always
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 150M
-#    volumes:
-#      - ./graphana:/var/lib/grafana
   goaccess:
     image: allinurl/goaccess
     volumes:
@@ -107,3 +97,12 @@ services:
   rendertron:
     image: ammobindotca/rendertron
     restart: always
+
+  fluent:
+    image: fluent/fluentd:v1.2
+    restart: always
+    env_file: .env
+    volumes:
+      - ./fluentd.conf:/fluentd/etc/fluentd.conf
+    environment:
+      - FLUENTD_CONF=fluentd.conf
