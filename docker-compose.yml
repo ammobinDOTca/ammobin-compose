@@ -4,11 +4,12 @@ services:
     image: abiosoft/caddy
     restart: always
     env_file: .env
+    networks:
+        - front
     links:
       - client
       - api
       - images
-        #   - graphana
     volumes:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
@@ -23,26 +24,21 @@ services:
   client:
     image: ammobindotca/ammobin-client:latest
     restart: always
+    networks:
+        - front
     deploy:
       resources:
         limits:
           memory: 450M
     depends_on:
       - api
- # influx:
- #   image: influxdb:1.5-alpine
-#    restart: always
-#    environment:
-     # - INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE=100M
-     # - INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE=100M
- #     - INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION=1h
- #     - INFLUXDB_DATA_INDEX_VERSION=tsi1
- #   volumes:
- #     - ./influx-data/:/var/lib/influxdb
   api:
     env_file: .env
     image: ammobindotca/ammobin-api:latest
     restart: always
+    networks:
+        - front
+        - back
     deploy:
       resources:
         limits:
@@ -59,19 +55,22 @@ services:
     env_file: .env
     image: ammobindotca/ammobin-worker
     restart: always
+    networks:
+        - back
     links:
       - redis
       - fluent
     depends_on:
       - redis
       - fluent
-      - api
     environment:
       - DONT_USE_INFLUX=true
   redis:
     image: redis:3.0-alpine
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+        - back
     deploy:
       resources:
         limits:
@@ -82,6 +81,8 @@ services:
   images:
     image: willnorris/imageproxy:latest
     restart: always
+    networks:
+        - front
     deploy:
       resources:
         limits:
@@ -89,6 +90,8 @@ services:
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
   goaccess:
     image: allinurl/goaccess
+    networks:
+        - front
     volumes:
       - ./goaccess/data:/srv/data
       - ./goaccess/html:/srv/report
@@ -97,12 +100,19 @@ services:
   rendertron:
     image: ammobindotca/rendertron
     restart: always
-
+    networks:
+        - back
   fluent:
     image: fluent/fluentd:v1.2
     restart: always
     env_file: .env
+    networks:
+        - back
     volumes:
       - ./fluentd.conf:/fluentd/etc/fluentd.conf
     environment:
       - FLUENTD_CONF=fluentd.conf
+
+networks:
+    back:
+    front:
