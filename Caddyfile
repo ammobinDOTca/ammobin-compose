@@ -7,7 +7,7 @@ ammobin.ca {
     fail_timeout 1s
     max_fails 5
     try_duration 1s
-    health_check /
+    health_check /ping
   }
   
   header / {
