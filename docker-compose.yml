@@ -103,7 +103,7 @@ services:
     networks:
         - back
   fluent:
-    image: fluent/fluentd:v1.2
+    image: ammobindotca/ammobin-elasticsearch-fluentd
     restart: always
     env_file: .env
     networks:
