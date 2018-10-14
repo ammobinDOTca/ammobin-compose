@@ -110,6 +110,7 @@ services:
         - back
     volumes:
       - ./fluentd.conf:/fluentd/etc/fluentd.conf
+      - ./caddy-logs:/var/log
     environment:
       - FLUENTD_CONF=fluentd.conf
 
