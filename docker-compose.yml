@@ -15,7 +15,7 @@ services:
       - ./Caddyfile:/etc/Caddyfile
       - caddy-logs:/var/log/caddy
       - goaccess-html:/www/goaccess
-      - caddy-srv/:/srv
+      - ./caddy-srv/:/srv
     ports:
       - 80:80
       - 443:443
@@ -93,7 +93,7 @@ services:
     networks:
         - front
     volumes:
-      - goaccess-data:/srv/data
+      - ./goaccess.conf:/srv/data/goaccess.conf
       - goaccess-html:/srv/report
       - caddy-logs:/srv/logs
     entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=wss://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log --real-time-html
