@@ -24,3 +24,5 @@ note: this will required access to port 80 (HTTP) and 443 (HTTPS)
 
 ## how to see how the site is actually doing
 1. vist stats.ammobin.ca with STATSUSER + STATSPASS
+OR
+1. set up your own elasticsearch cluster at home (see https://ramsay.xyz/2018/10/13/how-to-secure-elasticsearch-with-caddy.html for some inspiration)
