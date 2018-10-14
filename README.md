@@ -10,6 +10,9 @@ EMAIL=<email to receive messages from lets encrypt>
 wrapapi_key=<SOME_API_KEY>
 STATSPASS=<some good password>
 STATSUSER=<some good username>
+ES_URL=<url to your elasticsearch cluster>
+ES_USER=<http username for elasticsearch>
+ES_PASSWORD=<http password for elasticsearch>
 ```
 3. ```docker-compose up -d```
 
