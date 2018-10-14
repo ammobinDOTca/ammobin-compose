@@ -111,7 +111,7 @@ services:
     volumes:
       - ./fluentd.conf:/fluentd/etc/fluentd.conf
       - caddy-logs:/var/log
-      - fluent-buffer:/var/log/fluent/buffer
+      - fluent-buffer:/fluentd/log/
     environment:
       - FLUENTD_CONF=fluentd.conf
 
