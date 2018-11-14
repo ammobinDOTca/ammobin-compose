@@ -1,38 +1,27 @@
 version: '3'
 services:
   caddy:
-    image: abiosoft/caddy:latest
+    image: ammobindotca/caddy:arm
     restart: always
     env_file: .env
-    links:
-      - client
-      - api
-      - images
-      - graphana
     volumes:
-      - ./.caddy:/root/.caddy
-      - ./Caddyfile-local:/etc/Caddyfile
-      - ./caddy-logs:/var/log/caddy
-      - ./goaccess-data/report/:/www/goaccess
-      - ./caddy-srv/:/srv
-    ports:
-      - 80:80
-      - 443:443
-    command: --conf  "/etc/Caddyfile"
+    volumes:
+      - caddy-logs:/var/log/ammobin
+    networks:
+        - outside
+        - front
   client:
     image: ammobindotca/ammobin-client:arm
     restart: always
     deploy:
+      replicas: 2
       resources:
         limits:
           memory: 450M
     depends_on:
       - api
-  influx:
-    image: influxdb:1.3-alpine
-    restart: always
-    volumes:
-      - ./influx-data/:/var/lib/influxdb
+    networks:
+        - front
   api:
     env_file: .env
     image: ammobindotca/ammobin-api:arm
@@ -41,23 +30,20 @@ services:
       resources:
         limits:
           memory: 500M
-    links:
-      - redis
-      - influx
     depends_on:
       - redis
-      - influx
+    networks:
+        - front
+        - back
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker:arm
     restart: always
-    links:
-      - redis
-      - influx
     depends_on:
       - redis
-      - influx
       - api
+    networks:
+      - back
   redis:
     image: redis:3.0-alpine
     restart: always
@@ -66,7 +52,54 @@ services:
       resources:
         limits:
           memory: 200M
+    networks:
+      - back
     volumes:
       - ./redis-data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
-  
+   images:
+    image: ammobindotca/imageproxy:arm
+    deploy:
+      replicas: 4
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+    networks:
+      - front
+    entrypoint: /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers pxvwo6gvkk3su5l6.onion,pxvwo6gvkk3su5l6.onion.to
+        #fluent
+        #hidden service 
+  hidden:
+    image: memestream/hidden:arm
+    secrets:
+      - source: private_key
+        target: '/var/lib/tor/hidden_service/private_key'
+        uid: '100'
+        gid: '100'
+        mod: 600
+    deploy:
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
+    networks:
+      - outside
+secrets:
+  private_key:
+    file: ./private_key
+  fluent_es_config:
+    file: ./fluent_es_config
+volumes:
+  tor-keys:
+    driver: local
+  tor:
+    driver: local
+  caddy-logs:
+    driver: local
+  fluent-buffer:
+    driver: local
+
+networks:
+  ? outside
+  ? front
+  ? back
