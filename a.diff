@@ -1,0 +1,34 @@
+diff --git a/docker-compose.yml b/docker-compose.yml
+index 81c5c63..c441052 100644
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -111,7 +111,7 @@ services:
+     volumes:
+       - ./fluentd.conf:/fluentd/etc/fluentd.conf
+       - caddy-logs:/var/log
+-      - fluent-buffer:/var/log/fluent/buffer
++      - fluent-buffer:/fluentd/log/
+     environment:
+       - FLUENTD_CONF=fluentd.conf
+ 
+diff --git a/fluentd.conf b/fluentd.conf
+index ecd5b7d..31fa820 100644
+--- a/fluentd.conf
++++ b/fluentd.conf
+@@ -7,7 +7,7 @@
+ <source>
+  @type tail
+  path /var/log/ammobin.log
+- pos_file /var/log/fluent/buffer/ammobin.log.pos
++ pos_file /fluentd/log/ammobin.log.pos
+  tag ammobin.caddylog
+  <parse>
+    @type nginx
+@@ -27,6 +27,6 @@
+   logstash_prefix ammobin
+   <buffer>
+     @type file
+-    path /var/log/fluent/buffer
++    path /fluentd/log/buffer
+   </buffer>
+ </match>
