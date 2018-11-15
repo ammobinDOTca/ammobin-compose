@@ -1,0 +1,24 @@
+0.0.0.0:80 {
+  gzip
+  push
+  header / {
+    Strict-Transport-Security "max-age=31536000;"
+    X-XSS-Protection "1; mode=block"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "DENY"
+  }
+ 
+  log / /var/log/memestream/requests.log "{combined}" {
+        rotate_size 5  # Rotate after 50 MB
+        rotate_age  0  # Keep rotated files for 90 days
+        rotate_keep 0  # Keep at most 20 log files
+        ipmask 255.255.0.0 ffff:ffff:ffff:ff00::
+  }   
+
+  proxy / client:3000 
+  
+  proxy /api api:8080
+
+  proxy /images images:8080
+}
+
