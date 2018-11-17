@@ -1,0 +1,2 @@
+FROM redis:3-alpine
+COPY ./redis.conf /usr/local/etc/redis/redis.conf

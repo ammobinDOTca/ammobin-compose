@@ -44,19 +44,31 @@ services:
       - api
     networks:
       - back
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
+    networks:
   redis:
-    image: redis:3.0-alpine
+    image: ammobindotca/redis:arm
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
     deploy:
       resources:
         limits:
           memory: 200M
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
     networks:
       - back
     volumes:
-      - ./redis-data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - redis-data:/data
    images:
     image: ammobindotca/imageproxy:arm
     deploy:
@@ -68,7 +80,6 @@ services:
       - front
     entrypoint: /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers pxvwo6gvkk3su5l6.onion,pxvwo6gvkk3su5l6.onion.to
         #fluent
-        #hidden service 
   hidden:
     image: memestream/hidden:arm
     secrets:
@@ -98,6 +109,8 @@ volumes:
     driver: local
   fluent-buffer:
     driver: local
+  redis-data:
+      drive: local
 
 networks:
   ? outside
