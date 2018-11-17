@@ -69,7 +69,7 @@ services:
       - back
     volumes:
       - redis-data:/data
-   images:
+  images:
     image: ammobindotca/imageproxy:arm
     deploy:
       replicas: 4
