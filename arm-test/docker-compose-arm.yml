@@ -53,6 +53,7 @@ services:
           - node.platform.arch  == armv7l
           - node.role != manager
     networks:
+      - back
   redis:
     image: ammobindotca/redis:arm
     restart: always
