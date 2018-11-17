@@ -111,7 +111,7 @@ volumes:
   fluent-buffer:
     driver: local
   redis-data:
-      drive: local
+    driver: local
 
 networks:
   ? outside
