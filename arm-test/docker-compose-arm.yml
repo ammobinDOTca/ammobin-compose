@@ -2,11 +2,19 @@ version: '3.6'
 services:
   caddy:
     image: ammobindotca/caddy:arm
-    restart: always
     env_file: .env
     volumes:
     volumes:
       - caddy-logs:/var/log/ammobin
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
+
     networks:
         - outside
         - front

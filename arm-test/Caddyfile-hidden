@@ -8,7 +8,7 @@
     X-Frame-Options "DENY"
   }
  
-  log / /var/log/memestream/requests.log "{combined}" {
+  log / /var/log/ammobin/requests.log "{combined}" {
         rotate_size 5  # Rotate after 50 MB
         rotate_age  0  # Keep rotated files for 90 days
         rotate_keep 0  # Keep at most 20 log files
