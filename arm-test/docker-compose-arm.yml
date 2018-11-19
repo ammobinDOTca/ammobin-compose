@@ -35,6 +35,8 @@ services:
     networks:
         - front
         - back
+    environment:
+        - hidden=true
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker:arm
@@ -79,7 +81,7 @@ services:
           - node.platform.arch  == armv7l
     networks:
       - front
-    entrypoint: /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers pxvwo6gvkk3su5l6.onion,pxvwo6gvkk3su5l6.onion.to
+    entrypoint: /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ajuepvfqhs6665gy.onion,ajuepvfqhs6665gy.onion.to
         #fluent
   hidden:
     image: memestream/hidden:arm
