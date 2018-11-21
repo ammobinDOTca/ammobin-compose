@@ -35,6 +35,7 @@ services:
     image: ammobindotca/ammobin-api:arm
     restart: always
     deploy:
+      replicas: 1
       resources:
         limits:
           memory: 500M
@@ -55,9 +56,22 @@ services:
     networks:
       - back
     deploy:
+      replicas: 2
       resources:
         limits:
           memory: 100M
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
+
+  rendertron:
+    image: ammobindotca/rendertron:arm
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 500M
       placement:
         constraints:
           - node.platform.arch  == armv7l
