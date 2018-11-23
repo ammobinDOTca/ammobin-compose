@@ -46,6 +46,25 @@ services:
         - back
     environment:
         - hidden=true
+  manager:
+    env_file: .env
+    image: ammobindotca/ammobin-api:arm
+    restart: always
+    networks:
+        - back
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+      placement:
+        constraints:
+          - node.platform.arch  == armv7l
+          - node.role != manager
+    environment:
+      - DONT_USE_INFLUX=true
+    healthcheck: 
+        disable: true
+    command: "src/manager/index.js"
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker:arm

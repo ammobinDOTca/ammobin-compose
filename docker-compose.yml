@@ -51,6 +51,28 @@ services:
       - fluent
     environment:
       - DONT_USE_INFLUX=true
+  manager:
+    env_file: .env
+    image: ammobindotca/ammobin-api:latest
+    restart: always
+    networks:
+        - front
+        - back
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    links:
+      - redis
+      - fluent
+    depends_on:
+      - redis
+      - fluent
+    environment:
+      - DONT_USE_INFLUX=true
+    healthcheck:
+        disable: true
+    command: "src/manager/index.js"
   worker:
     env_file: .env
     image: ammobindotca/ammobin-worker
