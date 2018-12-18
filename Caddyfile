@@ -9,7 +9,15 @@ ammobin.ca {
     try_duration 1s
     health_check /ping
   }
-  
+ 
+  proxy /images images:8080 {
+    transparent
+  }
+ 
+  proxy /api api:8080 {
+    transparent
+  }
+
   header / {
     # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
     Strict-Transport-Security "max-age=31536000;"
