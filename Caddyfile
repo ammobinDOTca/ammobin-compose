@@ -12,10 +12,12 @@ ammobin.ca {
  
   proxy /images images:8080 {
     transparent
+    without /images
   }
  
   proxy /api api:8080 {
     transparent
+    without /api
   }
 
   header / {
