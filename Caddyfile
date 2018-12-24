@@ -2,7 +2,7 @@ ammobin.ca {
   tls {%EMAIL%}
   gzip
   push
-  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com {
+  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
     policy first
     fail_timeout 1s
     max_fails 5
