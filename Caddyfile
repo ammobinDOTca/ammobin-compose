@@ -3,7 +3,7 @@ ammobin.ca {
   gzip
   push
   proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
-    policy first
+    policy random #first
     fail_timeout 1s
     max_fails 5
     try_duration 1s
@@ -17,6 +17,7 @@ ammobin.ca {
  
   proxy /api api:8080 {
     transparent
+    websocket
     without /api
   }
 
@@ -30,7 +31,7 @@ ammobin.ca {
     # Disallow the site to be rendered within a frame (clickjacking protection)
     X-Frame-Options "DENY"
 
-    Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline'; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self';  report-uri https://ammobin.ca/api/content-security-report-uri"
+    Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline' 'storage.googleapis.com'; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self' 'https://images.ammobin.ca';  report-uri https://ammobin.ca/api/content-security-report-uri"
   }
   
   log / /var/log/caddy/ammobin.log "{combined}" {
@@ -97,12 +98,4 @@ stats.ammobin.ca:7890 {
  proxy / goaccess:7890 {
    websocket
  }
-}
-
-graphana.ammobin.ca {
-  tls {%EMAIL%}
-  proxy / graphana:3000 {
-    transparent
-  }
-  header / Strict-Transport-Security "max-age=31536000;"
 }
