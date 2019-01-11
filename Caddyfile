@@ -33,6 +33,7 @@ ammobin.ca {
     X-Frame-Options "DENY"
 
     Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline' https://storage.googleapis.com; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self';  report-uri https://ammobin.ca/api/content-security-report-uri"
+    Referrer-Policy "origin"
   }
   
   log / /var/log/caddy/ammobin.log "{combined}" {
