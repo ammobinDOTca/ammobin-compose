@@ -14,6 +14,7 @@ ammobin.ca {
   proxy /images images:8080 {
     transparent
     without /images
+    header_downstream Cache-Control: max-age=31536000
   }
  
   proxy /api api:8080 {
@@ -34,10 +35,6 @@ ammobin.ca {
 
     Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline' https://storage.googleapis.com; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self';  report-uri https://ammobin.ca/api/content-security-report-uri"
     Referrer-Policy "origin"
-  }
-  
-  header /images {
-    Cache-Control: max-age=31536000
   }
 
   log / /var/log/caddy/ammobin.log "{combined}" {
