@@ -36,6 +36,10 @@ ammobin.ca {
     Referrer-Policy "origin"
   }
   
+  header /images {
+    Cache-Control: max-age=31536000
+  }
+
   log / /var/log/caddy/ammobin.log "{combined}" {
     rotate_size 100
   }
