@@ -65,6 +65,21 @@ services:
       - fluent
     environment:
       - DONT_USE_INFLUX=true
+  refresher:
+    env_file: .env
+    image: ammobindotca/ammobin-api
+    restart: always
+    command: npm run start:refresher
+    networks:
+        - back
+    links:
+      - redis
+      - fluent
+    depends_on:
+      - redis
+      - fluent
+    environment:
+      - DONT_USE_INFLUX=true
   redis:
     image: redis:3.0-alpine
     restart: always
