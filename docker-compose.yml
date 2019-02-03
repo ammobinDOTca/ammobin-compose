@@ -70,6 +70,8 @@ services:
     image: ammobindotca/ammobin-api
     restart: always
     command: npm run start:refresher
+    healthcheck:
+      disable: true
     networks:
         - back
     links:
@@ -78,8 +80,6 @@ services:
     depends_on:
       - redis
       - fluent
-    environment:
-      - DONT_USE_INFLUX=true
   redis:
     image: redis:3.0-alpine
     restart: always
