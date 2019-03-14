@@ -2,8 +2,7 @@ ammobin.ca {
   tls {%EMAIL%}
   gzip
   push
-  # disabled proxying to local client:3000
-  proxy / https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
+  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
     policy first
     fail_timeout 1s
     max_fails 5
@@ -43,45 +42,6 @@ ammobin.ca {
 
   errors {
     * /srv/custom-error.html
-  }
-}
-
-api.ammobin.ca {
-  tls {%EMAIL%}
-  gzip
-  push
-  proxy / api:8080 {
-    transparent
-  }
-  header / {
-    # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
-    Strict-Transport-Security "max-age=31536000;"
-    # Enable cross-site filter (XSS) and tell browser to block detected attacks
-    X-XSS-Protection "1; mode=block"
-    # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
-    X-Content-Type-Options "nosniff"
-    # Disallow the site to be rendered within a frame (clickjacking protection)
-    X-Frame-Options "DENY"
-  }
-  log / /var/log/caddy/ammobin.log "{combined}" {
-    rotate_size 100
-  }
-}
-
-images.ammobin.ca {
-  tls {%EMAIL%}
-  proxy / images:8080 {
-    transparent
-  }
-  header / {
-    # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS
-    Strict-Transport-Security "max-age=31536000;"
-    # Enable cross-site filter (XSS) and tell browser to block detected attacks
-    X-XSS-Protection "1; mode=block"
-    # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
-    X-Content-Type-Options "nosniff"
-    # Disallow the site to be rendered within a frame (clickjacking protection)
-    X-Frame-Options "DENY"
   }
 }
 

@@ -7,7 +7,7 @@ services:
     networks:
         - front
     links:
-        # - client
+      - client
       - api
       - images
     volumes:
@@ -21,11 +21,11 @@ services:
       - 443:443
       - 7890:7890
     command: --agree --conf  "/etc/Caddyfile"
-    #  client:
-    # image: ammobindotca/ammobin-client:latest
-    # restart: always
-    #networks:
-    #    - front
+  client:
+    image: ammobindotca/ammobin-client:latest
+    restart: always
+    networks:
+       - front
     # deploy:
     #  resources:
     #    limits:
