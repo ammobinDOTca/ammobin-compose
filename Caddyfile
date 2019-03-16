@@ -38,6 +38,8 @@ ammobin.ca {
 
   log / /var/log/caddy/ammobin.log "{combined}" {
     rotate_size 100
+    # dont log ip addresses
+    ipmask 255.255.0.0 ffff:ffff:ffff:ff00::
   }
 
   errors {
