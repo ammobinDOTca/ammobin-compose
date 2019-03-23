@@ -124,11 +124,11 @@ services:
     networks:
         - back
     volumes:
-      - ./fluentd.conf:/fluentd/etc/fluentd.conf
+      - ./fluentd.conf:/fluentd/etc/fluent.conf
       - caddy-logs:/var/log
       - fluent-buffer:/fluentd/log/
     environment:
-      - FLUENTD_CONF=fluentd.conf
+      - FLUENTD_CONF=fluent.conf
 
 networks:
     back:
