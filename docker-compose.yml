@@ -9,6 +9,7 @@ services:
     links:
       - client
       - api
+      - api-reloading
       - images
     volumes:
       - ./.caddy:/root/.caddy
@@ -35,6 +36,25 @@ services:
   api:
     env_file: .env
     image: ammobindotca/ammobin-api:latest
+    restart: always
+    networks:
+        - front
+        - back
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    links:
+      - redis
+      - fluent
+    depends_on:
+      - redis
+      - fluent
+    environment:
+      - DONT_USE_INFLUX=true
+  api-reloading:
+    env_file: .env
+    image: ammobindotca/ammobin-api:reloading
     restart: always
     networks:
         - front
