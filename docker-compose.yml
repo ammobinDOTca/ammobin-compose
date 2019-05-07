@@ -23,7 +23,7 @@ services:
       - 7890:7890
     command: --agree --conf  "/etc/Caddyfile"
   client:
-    image: ammobindotca/ammobin-client:latest
+    image: ammobindotca/ammobin-client:reloading
     restart: always
     networks:
        - front
@@ -35,7 +35,7 @@ services:
     #  - api
   api:
     env_file: .env
-    image: ammobindotca/ammobin-api:latest
+    image: ammobindotca/ammobin-api:reloading
     restart: always
     networks:
         - front
@@ -73,7 +73,7 @@ services:
       - DONT_USE_INFLUX=true
   worker:
     env_file: .env
-    image: ammobindotca/ammobin-worker
+    image: ammobindotca/ammobin-worker:reloading
     restart: always
     networks:
         - back
@@ -87,7 +87,7 @@ services:
       - DONT_USE_INFLUX=true
   refresher:
     env_file: .env
-    image: ammobindotca/ammobin-api
+    image: ammobindotca/ammobin-api:reloading
     restart: always
     command: npm run start:refresher
     healthcheck:
