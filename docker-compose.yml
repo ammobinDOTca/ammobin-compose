@@ -51,7 +51,7 @@ services:
       - redis
       - fluent
     environment:
-      - DONT_USE_INFLUX=true
+      - DONT_USE_INFLUX=true      
   api-reloading:
     env_file: .env
     image: ammobindotca/ammobin-api:reloading

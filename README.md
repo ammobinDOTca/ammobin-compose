@@ -6,6 +6,7 @@ How I run all of ammobin.ca
 1. install docker + docker-compose
 2. create ```.env``` with 
 ```
+SITE=<your domain name, ie: ammobin.ca>
 EMAIL=<email to receive messages from lets encrypt>
 wrapapi_key=<SOME_API_KEY>
 STATSPASS=<some good password>

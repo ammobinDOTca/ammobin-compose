@@ -1,4 +1,4 @@
-ammobin.ca {
+{%SITE%} {
   tls {%EMAIL%}
   gzip
   push
@@ -32,7 +32,7 @@ ammobin.ca {
     # Disallow the site to be rendered within a frame (clickjacking protection)
     X-Frame-Options "DENY"
 
-    Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline' https://storage.googleapis.com; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self';  report-uri https://ammobin.ca/api/content-security-report-uri"
+    Content-Security-Policy-Report-Only "default-src 'self';script-src 'self' 'unsafe-inline' https://storage.googleapis.com; connect-src  'self';  style-src 'self' 'unsafe-inline';img-src 'self';  report-uri https://{%SITE%}/api/content-security-report-uri"
     Referrer-Policy "origin"
   }
 
@@ -48,7 +48,7 @@ ammobin.ca {
   }
 }
 
-beta.ammobin.ca {
+beta.{%SITE%} {
   cors
   proxy /api api-reloading:8080 {
     transparent
@@ -56,7 +56,7 @@ beta.ammobin.ca {
     without /api
   }
 }
-stats.ammobin.ca {
+stats.{%SITE%} {
   tls {%EMAIL%}
   root  /www/goaccess
   gzip
@@ -66,7 +66,7 @@ stats.ammobin.ca {
 }
 
 
-stats.ammobin.ca:7890 {
+stats.{%SITE%}:7890 {
  log
  tls {%EMAIL%}
  proxy / goaccess:7890 {
