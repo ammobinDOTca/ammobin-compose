@@ -48,14 +48,6 @@ ammobin.ca {
   }
 }
 
-beta.ammobin.ca {
-  cors
-  proxy /api api-reloading:8080 {
-    transparent
-    websocket
-    without /api
-  }
-}
 stats.ammobin.ca {
   tls {%EMAIL%}
   root  /www/goaccess

@@ -9,7 +9,6 @@ services:
     links:
       - client
       - api
-      - api-reloading
       - images
     volumes:
       - ./.caddy:/root/.caddy
@@ -27,34 +26,15 @@ services:
     restart: always
     networks:
        - front
-    # deploy:
-    #  resources:
-    #    limits:
-    #      memory: 450M
-    #depends_on:
-    #  - api
-  api:
-    env_file: .env
-    image: ammobindotca/ammobin-api:reloading
-    restart: always
-    networks:
-        - front
-        - back
     deploy:
       resources:
         limits:
-          memory: 500M
-    links:
-      - redis
-      - fluent
+          memory: 450M
     depends_on:
-      - redis
-      - fluent
-    environment:
-      - DONT_USE_INFLUX=true
-  api-reloading:
+      - api
+  api:
     env_file: .env
-    image: ammobindotca/ammobin-api:reloading
+    image: ammobindotca/ammobin-api
     restart: always
     networks:
         - front
@@ -73,7 +53,7 @@ services:
       - DONT_USE_INFLUX=true
   worker:
     env_file: .env
-    image: ammobindotca/ammobin-worker:reloading
+    image: ammobindotca/ammobin-worker
     restart: always
     networks:
         - back
@@ -87,7 +67,7 @@ services:
       - DONT_USE_INFLUX=true
   refresher:
     env_file: .env
-    image: ammobindotca/ammobin-api:reloading
+    image: ammobindotca/ammobin-api
     restart: always
     command: npm run start:refresher
     healthcheck:
@@ -123,15 +103,15 @@ services:
         limits:
           memory: 150M
     entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
-    # goaccess:
-    #image: allinurl/goaccess
-    #networks:
-    #    - front
-    #volumes:
-    #  - ./goaccess.conf:/srv/data/goaccess.conf
-    #  - goaccess-html:/srv/report
-    #  - caddy-logs:/srv/logs
-    #entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=wss://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log --real-time-html
+  goaccess:
+    image: allinurl/goaccess
+    networks:
+        - front
+    volumes:
+      - ./goaccess.conf:/srv/data/goaccess.conf
+      - goaccess-html:/srv/report
+      - caddy-logs:/srv/logs
+    entrypoint: goaccess --no-global-config --config-file=/srv/data/goaccess.conf --ws-url=wss://stats.ammobin.ca --output=/srv/report/index.html --log-file=/srv/logs/ammobin.log --real-time-html
   rendertron:
     image: ammobindotca/rendertron
     restart: always
