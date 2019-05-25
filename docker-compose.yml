@@ -32,6 +32,10 @@ services:
           memory: 450M
     depends_on:
       - api
+      - redis
+      - fluent
+    environment:
+      - DONT_USE_INFLUX=true      
   api:
     env_file: .env
     image: ammobindotca/ammobin-api
