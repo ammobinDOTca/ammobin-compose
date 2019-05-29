@@ -10,7 +10,8 @@
     idle   1m
   }
 
-  proxy / client:3000 https://ammobin.now.sh https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
+  # https://ammobin.now.sh (out of date)
+  proxy / client:3000  https://ammobin-client.herokuapp.com https://ammobin.netlify.com https://ammobin.surge.sh {
     policy first
     fail_timeout 1s
     max_fails 5
