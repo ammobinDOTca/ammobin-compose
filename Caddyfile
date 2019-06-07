@@ -4,9 +4,9 @@
   push
  
   timeouts {
-    read   5s
-    header 5s
-    write  5s
+    read   30s
+    header 30s
+    write  30s
     idle   1m
   }
 
@@ -22,6 +22,7 @@
   proxy /images images:8080 {
     transparent
     without /images
+    fail_timeout 3s
     header_downstream Cache-Control: max-age=31536000
   }
  
