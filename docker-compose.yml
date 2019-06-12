@@ -106,7 +106,7 @@ services:
       resources:
         limits:
           memory: 150M
-    entrypoint:  /go/bin/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
+    entrypoint:  /app/imageproxy -cache /tmp/imageproxy  -addr 0.0.0.0:8080  -referrers ammobin.ca
   goaccess:
     image: allinurl/goaccess
     networks:
