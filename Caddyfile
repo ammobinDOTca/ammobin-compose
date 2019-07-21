@@ -23,7 +23,7 @@
     transparent
     without /images
     fail_timeout 3s
-    header_downstream Cache-Control: max-age=31536000
+    header_downstream Cache-Control max-age=31536000
   }
  
   proxy /api api:8080 {
