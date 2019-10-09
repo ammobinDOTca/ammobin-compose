@@ -6,10 +6,6 @@ services:
     env_file: .env
     networks:
         - front
-    links:
-      - client
-      - api
-      - images
     volumes:
       - ./.caddy:/root/.caddy
       - ./Caddyfile:/etc/Caddyfile
@@ -30,10 +26,6 @@ services:
       resources:
         limits:
           memory: 450M
-    depends_on:
-      - api
-      - redis
-      - fluent
     environment:
       - DONT_USE_INFLUX=true      
   api:
@@ -47,9 +39,6 @@ services:
       resources:
         limits:
           memory: 500M
-    links:
-      - redis
-      - fluent
     depends_on:
       - redis
       - fluent
@@ -61,9 +50,6 @@ services:
     restart: always
     networks:
         - back
-    links:
-      - redis
-      - fluent
     depends_on:
       - redis
       - fluent
@@ -78,9 +64,6 @@ services:
       disable: true
     networks:
         - back
-    links:
-      - redis
-      - fluent
     depends_on:
       - redis
       - fluent
