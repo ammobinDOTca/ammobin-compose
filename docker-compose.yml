@@ -46,8 +46,9 @@ services:
       - DONT_USE_INFLUX=true
   worker:
     env_file: .env
-    image: ammobindotca/ammobin-worker
+    image: ammobindotca/ammobin-api
     restart: always
+    command: npm run start:worker
     networks:
         - back
     depends_on:
