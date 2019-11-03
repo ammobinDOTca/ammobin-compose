@@ -1,0 +1,2724 @@
+{
+    "__inputs": [
+        {
+            "name": "DS_AMMOBIN",
+            "label": "ammobin",
+            "description": "",
+            "type": "datasource",
+            "pluginId": "elasticsearch",
+            "pluginName": "Elasticsearch"
+        },
+        {
+            "name": "DS_ES",
+            "label": "es",
+            "description": "",
+            "type": "datasource",
+            "pluginId": "elasticsearch",
+            "pluginName": "Elasticsearch"
+        }
+    ],
+    "__requires": [
+        {
+            "type": "panel",
+            "id": "blackmirror1-singlestat-math-panel",
+            "name": "Singlestat Math",
+            "version": "1.1.7"
+        },
+        {
+            "type": "datasource",
+            "id": "elasticsearch",
+            "name": "Elasticsearch",
+            "version": "1.0.0"
+        },
+        {
+            "type": "grafana",
+            "id": "grafana",
+            "name": "Grafana",
+            "version": "6.4.3"
+        },
+        {
+            "type": "panel",
+            "id": "grafana-piechart-panel",
+            "name": "Pie Chart",
+            "version": "1.3.9"
+        },
+        {
+            "type": "panel",
+            "id": "graph",
+            "name": "Graph",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "singlestat",
+            "name": "Singlestat",
+            "version": ""
+        },
+        {
+            "type": "panel",
+            "id": "table",
+            "name": "Table",
+            "version": ""
+        }
+    ],
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": "${DS_AMMOBIN}",
+                "enable": true,
+                "hide": true,
+                "iconColor": "#96D98D",
+                "limit": 100,
+                "name": "server started",
+                "query": "message.type:\"server-started\"",
+                "showIn": 0,
+                "textField": "api started",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "panels": [
+        {
+            "aliasColors": {
+                "failed": "#bf1b00",
+                "finished": "#7eb26d",
+                "started": "#64b0c8"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 0
+            },
+            "id": 5,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "started",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "20m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"started-scrape\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                },
+                {
+                    "alias": "finished",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "20m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"finished-scrape\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                },
+                {
+                    "alias": "failed",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "20m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"failed-scrape\"",
+                    "refId": "C",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "scrapes",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 0
+            },
+            "id": 6,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": true,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.ItemType.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "asc",
+                                "orderBy": "_term",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "20m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "message.items",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {},
+                            "type": "sum"
+                        }
+                    ],
+                    "query": "message.type:finished-scrape",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "found items",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "${DS_AMMOBIN}",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 2,
+                "w": 24,
+                "x": 0,
+                "y": 9
+            },
+            "id": 28,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                    "name": "value to text",
+                    "value": 1
+                },
+                {
+                    "name": "range to text",
+                    "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                    "from": "null",
+                    "text": "N/A",
+                    "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": true,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: 'track-preformance '",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": "",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "page loads",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                    "op": "=",
+                    "text": "N/A",
+                    "value": "null"
+                }
+            ],
+            "valueName": "total"
+        },
+        {
+            "cacheTimeout": null,
+            "circleBackground": false,
+            "colorBackground": false,
+            "colorValue": true,
+            "datasource": "${DS_ES}",
+            "defaultColor": "rgb(117, 117, 117)",
+            "format": "percent",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 3,
+                "w": 12,
+                "x": 0,
+                "y": 11
+            },
+            "id": 30,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                    "name": "value to text",
+                    "value": 1
+                },
+                {
+                    "name": "range to text",
+                    "value": 2
+                }
+            ],
+            "math": "A/B * 100",
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                    "from": "null",
+                    "text": "N/A",
+                    "to": "null"
+                }
+            ],
+            "sortOrder": "asc",
+            "sortOrderOptions": [
+                {
+                    "text": "Ascending",
+                    "value": "asc"
+                },
+                {
+                    "text": "Descending",
+                    "value": "desc"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                    "alias": "A",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-outbound-click\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                },
+                {
+                    "alias": "B",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-view\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [
+                {
+                    "color": "rgb(117, 117, 117)",
+                    "value": 0
+                },
+                {
+                    "color": "#DEB6F2",
+                    "value": 33
+                },
+                {
+                    "color": "#A352CC",
+                    "value": 50
+                },
+                {
+                    "color": "#8F3BB8",
+                    "value": 66
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "click to views",
+            "tooltip": {
+                "show": true
+            },
+            "transparent": true,
+            "type": "blackmirror1-singlestat-math-panel",
+            "valueFontSize": "80%",
+            "valueMappingColorBackground": "#767171",
+            "valueMaps": [
+                {
+                    "op": "=",
+                    "text": "No data",
+                    "value": "null"
+                }
+            ],
+            "valueName": "total"
+        },
+        {
+            "cacheTimeout": null,
+            "circleBackground": false,
+            "colorBackground": false,
+            "colorValue": true,
+            "datasource": "${DS_ES}",
+            "defaultColor": "rgb(117, 117, 117)",
+            "format": "percent",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 3,
+                "w": 12,
+                "x": 12,
+                "y": 11
+            },
+            "id": 31,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                    "name": "value to text",
+                    "value": 1
+                },
+                {
+                    "name": "range to text",
+                    "value": 2
+                }
+            ],
+            "math": "A/B * 100",
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                    "from": "null",
+                    "text": "N/A",
+                    "to": "null"
+                }
+            ],
+            "sortOrder": "asc",
+            "sortOrderOptions": [
+                {
+                    "text": "Ascending",
+                    "value": "asc"
+                },
+                {
+                    "text": "Descending",
+                    "value": "desc"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": false,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                    "alias": "A",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-view\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                },
+                {
+                    "alias": "B",
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: 'track-preformance '",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [
+                {
+                    "color": "rgb(117, 117, 117)",
+                    "value": 0
+                },
+                {
+                    "color": "#DEB6F2",
+                    "value": 33
+                },
+                {
+                    "color": "#A352CC",
+                    "value": 50
+                },
+                {
+                    "color": "#8F3BB8",
+                    "value": 66
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "views to page loads",
+            "tooltip": {
+                "show": true
+            },
+            "transparent": true,
+            "type": "blackmirror1-singlestat-math-panel",
+            "valueFontSize": "80%",
+            "valueMappingColorBackground": "#767171",
+            "valueMaps": [
+                {
+                    "op": "=",
+                    "text": "No data",
+                    "value": "null"
+                }
+            ],
+            "valueName": "total"
+        },
+        {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "${DS_AMMOBIN}",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 2,
+                "w": 12,
+                "x": 0,
+                "y": 14
+            },
+            "id": 12,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                    "name": "value to text",
+                    "value": 1
+                },
+                {
+                    "name": "range to text",
+                    "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                    "from": "null",
+                    "text": "N/A",
+                    "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": true,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-outbound-click\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": "",
+            "title": "clicks",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                    "op": "=",
+                    "text": "N/A",
+                    "value": "null"
+                }
+            ],
+            "valueName": "total"
+        },
+        {
+            "cacheTimeout": null,
+            "colorBackground": false,
+            "colorValue": false,
+            "colors": [
+                "#299c46",
+                "rgba(237, 129, 40, 0.89)",
+                "#d44a3a"
+            ],
+            "datasource": "${DS_AMMOBIN}",
+            "format": "none",
+            "gauge": {
+                "maxValue": 100,
+                "minValue": 0,
+                "show": false,
+                "thresholdLabels": false,
+                "thresholdMarkers": true
+            },
+            "gridPos": {
+                "h": 2,
+                "w": 12,
+                "x": 12,
+                "y": 14
+            },
+            "id": 13,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+                {
+                    "name": "value to text",
+                    "value": 1
+                },
+                {
+                    "name": "range to text",
+                    "value": 2
+                }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "options": {},
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+                {
+                    "from": "null",
+                    "text": "N/A",
+                    "to": "null"
+                }
+            ],
+            "sparkline": {
+                "fillColor": "rgba(31, 118, 189, 0.18)",
+                "full": true,
+                "lineColor": "rgb(31, 120, 193)",
+                "show": true
+            },
+            "tableColumn": "",
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-view\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": "",
+            "title": "views",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [
+                {
+                    "op": "=",
+                    "text": "N/A",
+                    "value": "null"
+                }
+            ],
+            "valueName": "total"
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "decimals": 0,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 16
+            },
+            "id": 2,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": true,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.record.subType.keyword",
+                            "id": "5",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "missing": "UNKNOWN",
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "4",
+                            "settings": {
+                                "interval": "1h",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-outbound-click\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "clicks",
+            "tooltip": {
+                "shared": true,
+                "sort": 2,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "decimals": 0,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 16
+            },
+            "id": 3,
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": true,
+                "total": true,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.subType.keyword",
+                            "id": "5",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "missing": "UNKNOWN",
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "4",
+                            "settings": {
+                                "interval": "1h",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-view\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "views",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "decimals": 0,
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "decimals": 0,
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "breakPoint": "50%",
+            "cacheTimeout": null,
+            "combine": {
+                "label": "Others",
+                "threshold": "0.05"
+            },
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "80%",
+            "format": "short",
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 0,
+                "y": 25
+            },
+            "id": 8,
+            "interval": null,
+            "legend": {
+                "percentage": true,
+                "show": true,
+                "sort": "total",
+                "sortDesc": true,
+                "values": true
+            },
+            "legendType": "Right side",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "options": {},
+            "pieType": "pie",
+            "strokeWidth": 1,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.record.vendor.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 5,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "3",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {},
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-outbound-click\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "clicks by vendor",
+            "type": "grafana-piechart-panel",
+            "valueName": "total"
+        },
+        {
+            "aliasColors": {},
+            "breakPoint": "50%",
+            "cacheTimeout": null,
+            "combine": {
+                "label": "Others",
+                "threshold": "0.15"
+            },
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "80%",
+            "format": "short",
+            "gridPos": {
+                "h": 9,
+                "w": 12,
+                "x": 12,
+                "y": 25
+            },
+            "id": 15,
+            "interval": null,
+            "legend": {
+                "percentage": true,
+                "show": true,
+                "sort": "total",
+                "sortDesc": true,
+                "values": true
+            },
+            "legendType": "Right side",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "options": {},
+            "pieType": "pie",
+            "strokeWidth": 1,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "ua.browser.family.keyword",
+                            "id": "5",
+                            "settings": {
+                                "min_doc_count": 25,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "ua.os.family.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 5,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "3",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {},
+                            "type": "count"
+                        }
+                    ],
+                    "query": "ua.browser.family:*",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "OS + Browser",
+            "type": "grafana-piechart-panel",
+            "valueName": "total"
+        },
+        {
+            "aliasColors": {},
+            "breakPoint": "50%",
+            "cacheTimeout": null,
+            "combine": {
+                "label": "Others",
+                "threshold": ""
+            },
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "80%",
+            "format": "short",
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 0,
+                "y": 34
+            },
+            "id": 23,
+            "interval": null,
+            "legend": {
+                "percentage": true,
+                "show": true,
+                "sort": "total",
+                "sortDesc": true,
+                "values": true
+            },
+            "legendType": "Right side",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "options": {},
+            "pieType": "pie",
+            "strokeWidth": 1,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.record.itemType.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "missing": "unknown",
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "3",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {},
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-outbound-click\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "clicks by item type",
+            "type": "grafana-piechart-panel",
+            "valueName": "total"
+        },
+        {
+            "aliasColors": {},
+            "breakPoint": "50%",
+            "cacheTimeout": null,
+            "combine": {
+                "label": "Others",
+                "threshold": ""
+            },
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "80%",
+            "format": "short",
+            "gridPos": {
+                "h": 10,
+                "w": 12,
+                "x": 12,
+                "y": 34
+            },
+            "id": 24,
+            "interval": null,
+            "legend": {
+                "percentage": true,
+                "show": true,
+                "sort": "total",
+                "sortDesc": true,
+                "values": true
+            },
+            "legendType": "Right side",
+            "links": [],
+            "maxDataPoints": 3,
+            "nullPointMode": "connected",
+            "options": {},
+            "pieType": "pie",
+            "strokeWidth": 1,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.itemType.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "@timestamp",
+                            "id": "3",
+                            "settings": {
+                                "interval": "auto",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {},
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"track-view\"",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "views by item type",
+            "type": "grafana-piechart-panel",
+            "valueName": "total"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 24,
+                "x": 0,
+                "y": 44
+            },
+            "id": 10,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 0,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.source.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 2,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "field": "message.ItemType.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 2,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "field": "message.msg.keyword",
+                            "id": "2",
+                            "settings": {
+                                "min_doc_count": 3,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"failed-scrape\" AND NOT message.msg: \" unknown type*\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "scrape error log",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 9,
+                "w": 24,
+                "x": 0,
+                "y": 53
+            },
+            "id": 22,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 2,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "itemType",
+                    "colorMode": "row",
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "link": false,
+                    "mappingType": 1,
+                    "pattern": "message.ItemType.keyword",
+                    "preserveFormat": false,
+                    "thresholds": [
+                        "shot",
+                        "rimfire"
+                    ],
+                    "type": "string",
+                    "unit": "short",
+                    "valueMaps": []
+                },
+                {
+                    "alias": "",
+                    "colorMode": "cell",
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "Count",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "filter",
+                    "thresholds": [],
+                    "type": "hidden",
+                    "unit": "short"
+                },
+                {
+                    "alias": "vendor",
+                    "colorMode": null,
+                    "colors": [
+                        "rgba(245, 54, 54, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(50, 172, 45, 0.97)"
+                    ],
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "decimals": 2,
+                    "mappingType": 1,
+                    "pattern": "message.source.keyword",
+                    "thresholds": [],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.source.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 3,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "fake": true,
+                            "id": "5",
+                            "query": "*",
+                            "settings": {
+                                "filters": [
+                                    {
+                                        "label": "no items",
+                                        "query": "message.items:0"
+                                    }
+                                ]
+                            },
+                            "type": "filters"
+                        },
+                        {
+                            "fake": true,
+                            "field": "message.ItemType.keyword",
+                            "id": "4",
+                            "settings": {
+                                "min_doc_count": 3,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type:\"finished-scrape\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "no results",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 0,
+                "y": 62
+            },
+            "id": 18,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.query.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "keyword searchs",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 12,
+                "y": 62
+            },
+            "id": 20,
+            "interval": "",
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.subType.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "calibre searches",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 0,
+                "y": 68
+            },
+            "id": 21,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.vendor.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "vendor searches",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 12,
+                "y": 68
+            },
+            "id": 19,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.province.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "province searches",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 0,
+                "y": 74
+            },
+            "id": 33,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.page",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "page",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "columns": [],
+            "datasource": "${DS_AMMOBIN}",
+            "fontSize": "100%",
+            "gridPos": {
+                "h": 6,
+                "w": 12,
+                "x": 12,
+                "y": 74
+            },
+            "id": 32,
+            "links": [],
+            "options": {},
+            "pageSize": null,
+            "scroll": true,
+            "showHeader": true,
+            "sort": {
+                "col": 1,
+                "desc": true
+            },
+            "styles": [
+                {
+                    "alias": "Time",
+                    "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                    "pattern": "Time",
+                    "type": "date"
+                },
+                {
+                    "alias": "",
+                    "colorMode": null,
+                    "colors": [
+                        "#ef843c",
+                        "#e24d42",
+                        "#890f02"
+                    ],
+                    "decimals": 0,
+                    "pattern": "/.*/",
+                    "thresholds": [
+                        "2",
+                        "3",
+                        "10"
+                    ],
+                    "type": "number",
+                    "unit": "short"
+                }
+            ],
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.variables.pageSize",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "desc",
+                                "orderBy": "_count",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "query": "message.type: \"graphql-query\"",
+                    "refId": "B",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "title": "page size",
+            "transform": "table",
+            "type": "table"
+        },
+        {
+            "aliasColors": {
+                "206": "super-light-green",
+                "304": "super-light-green",
+                "400": "dark-red",
+                "502": "semi-dark-purple"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 13,
+                "w": 24,
+                "x": 0,
+                "y": 80
+            },
+            "id": 17,
+            "legend": {
+                "alignAsTable": false,
+                "avg": false,
+                "current": false,
+                "hideEmpty": false,
+                "hideZero": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "code.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "order": "asc",
+                                "orderBy": "_term",
+                                "size": "10"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "10m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "select field",
+                            "id": "1",
+                            "type": "count"
+                        }
+                    ],
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "http reqs",
+            "tooltip": {
+                "shared": true,
+                "sort": 2,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 13,
+                "w": 24,
+                "x": 0,
+                "y": 93
+            },
+            "id": 34,
+            "legend": {
+                "alignAsTable": false,
+                "avg": true,
+                "current": false,
+                "hideEmpty": false,
+                "hideZero": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "alias": "",
+                    "bucketAggs": [
+                        {
+                            "fake": true,
+                            "field": "message.path.keyword",
+                            "id": "3",
+                            "settings": {
+                                "min_doc_count": 1,
+                                "missing": null,
+                                "order": "asc",
+                                "orderBy": "_count",
+                                "size": "0"
+                            },
+                            "type": "terms"
+                        },
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "10m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "message.timeMs",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {
+                                "percents": [
+                                    "90"
+                                ]
+                            },
+                            "type": "percentiles"
+                        }
+                    ],
+                    "query": "",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "http response time by endpoint",
+            "tooltip": {
+                "shared": true,
+                "sort": 2,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "ms",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "${DS_AMMOBIN}",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 13,
+                "w": 24,
+                "x": 0,
+                "y": 106
+            },
+            "id": 26,
+            "legend": {
+                "alignAsTable": false,
+                "avg": true,
+                "current": false,
+                "hideEmpty": false,
+                "hideZero": false,
+                "max": false,
+                "min": false,
+                "rightSide": false,
+                "show": true,
+                "total": false,
+                "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+                "dataLinks": []
+            },
+            "paceLength": 10,
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+                {
+                    "bucketAggs": [
+                        {
+                            "field": "@timestamp",
+                            "id": "2",
+                            "settings": {
+                                "interval": "10m",
+                                "min_doc_count": 0,
+                                "trimEdges": 0
+                            },
+                            "type": "date_histogram"
+                        }
+                    ],
+                    "metrics": [
+                        {
+                            "field": "message.connectTime",
+                            "id": "1",
+                            "meta": {},
+                            "settings": {
+                                "percents": [
+                                    "90"
+                                ]
+                            },
+                            "type": "percentiles"
+                        },
+                        {
+                            "field": "message.interactiveTime",
+                            "id": "3",
+                            "meta": {},
+                            "settings": {
+                                "percents": [
+                                    "90"
+                                ]
+                            },
+                            "type": "percentiles"
+                        },
+                        {
+                            "field": "message.renderTime",
+                            "id": "4",
+                            "meta": {},
+                            "settings": {
+                                "percents": [
+                                    "90"
+                                ]
+                            },
+                            "type": "percentiles"
+                        }
+                    ],
+                    "query": "message.type: 'track-performance'",
+                    "refId": "A",
+                    "timeField": "@timestamp"
+                }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "clientside performance (ms)",
+            "tooltip": {
+                "shared": true,
+                "sort": 2,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [
+                {
+                    "format": "ms",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        }
+    ],
+    "schemaVersion": 20,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-24h",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ],
+        "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+        ]
+    },
+    "timezone": "",
+    "title": "ammobin",
+    "uid": "8mgKkNbmz",
+    "version": 64
+}
