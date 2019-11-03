@@ -46,6 +46,10 @@
     Referrer-Policy "origin"
   }
 
+  header /api/graphql {
+    -Content-Security-Policy # dont controll this UI, they pull in their own assets. TODO: whitelist them
+  }
+
   log / /var/log/caddy/ammobin.log "{combined}" {
     rotate_size 100
     # dont log ip addresses
