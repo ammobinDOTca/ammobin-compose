@@ -44,6 +44,7 @@ services:
       - fluent
     environment:
       - DONT_USE_INFLUX=true
+      - FLUENT=true
   worker:
     env_file: .env
     image: ammobindotca/ammobin-api
@@ -56,6 +57,7 @@ services:
       - fluent
     environment:
       - DONT_USE_INFLUX=true
+      - FLUENT=true
   refresher:
     env_file: .env
     image: ammobindotca/ammobin-api
@@ -68,6 +70,8 @@ services:
     depends_on:
       - redis
       - fluent
+    environment:
+      - FLUENT=true
   redis:
     image: redis:3.0-alpine
     restart: always
