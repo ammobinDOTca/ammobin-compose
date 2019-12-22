@@ -73,7 +73,7 @@ services:
     environment:
       - FLUENT=true
   redis:
-    image: redis:3.0-alpine
+    image: redis:5-alpine
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
     networks:
